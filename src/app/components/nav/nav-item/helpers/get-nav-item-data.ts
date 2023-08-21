@@ -1,4 +1,4 @@
-import { NavItemType } from "@/app/common/enums";
+import { AppRoutes, NavItemType } from "@/app/common/enums";
 
 function getNavItemData(navItemType: NavItemType){
    switch (navItemType){
@@ -10,6 +10,7 @@ function getNavItemData(navItemType: NavItemType){
             width: 117,
             height: 163,
             name: 'voting',
+            route: AppRoutes.BREEDS
         }
     }
     case NavItemType.VOTING: {
@@ -19,7 +20,8 @@ function getNavItemData(navItemType: NavItemType){
             alt: 'vote table illustration',
             width: 100,
             height: 125,
-            name: 'breeds'
+            name: 'breeds',
+            route: AppRoutes.VOTING
         }
     }
     case NavItemType.GALLERY: {
@@ -29,7 +31,8 @@ function getNavItemData(navItemType: NavItemType){
             alt: 'search illustrations',
             width: 112,
             height: 190,
-            name: 'gallery'
+            name: 'gallery',
+            route: AppRoutes.GALLERY
         }
     }
 

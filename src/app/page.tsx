@@ -1,9 +1,13 @@
-import Nav from "./components/nav";
+import GirlAndPets from "../../public/images/girl-and-pets.webp";
 
 export default function Home() {
   return (
-    <main className="flex min-h-screen flex-col items-center justify-between p-24">
-      <Nav />
-    </main>
-  )
+    <div className="w-full flex justify-center">
+      <div className="w-[680px] h-[840px] rounded-[20px] bg-[#FBE0DC]" />
+      <div
+        className="h-full absolute top-[-45px] max-w-[775px] w-[59vw] max-h-[900px] bg-cover	bg-no-repeat right-[-93px]"
+        style={{ backgroundImage: `url(${GirlAndPets.src})` }}
+      />
+    </div>
+  );
 }
