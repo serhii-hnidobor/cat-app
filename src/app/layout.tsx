@@ -1,8 +1,12 @@
-import "./globals.css";
 import type { Metadata } from "next";
 import { Jost } from "next/font/google";
 import Nav from "./components/nav";
 import { Logo } from "./components/icons/Logo";
+
+import 'simplebar-react/dist/simplebar.min.css';
+import 'swiper/css';
+import 'swiper/css/pagination';
+import "./globals.css";
 
 const jost = Jost({ subsets: ["latin"] });
 

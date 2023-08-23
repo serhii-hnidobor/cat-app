@@ -14,4 +14,16 @@ enum AppRoutes {
   GALLERY = '/gallery' 
 }
 
-export { NavItemType, IconNames, AppRoutes };
+enum DataStatus{
+  PENDING = 'PENDING',
+  SUCCESS = 'SUCCESS',
+  FAILED = 'FAILED',
+  IDLE = 'IDLE',
+}
+
+enum Sort {
+  ASC = 'ASC',
+  DESC = 'DESC'
+}
+
+export { NavItemType, IconNames, AppRoutes, DataStatus, Sort };
