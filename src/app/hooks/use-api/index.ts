@@ -1,6 +1,5 @@
 import { DataStatus } from "@/app/common/enums";
-import { useEffect, useState } from "react";
-import useDeepCompareEffect from "use-deep-compare-effect";
+import { useCallback, useEffect, useState } from "react";
 
 interface Arg<T> {
   apiCallFunc: () => Promise<T>;

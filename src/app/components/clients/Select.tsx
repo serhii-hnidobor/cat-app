@@ -1,8 +1,10 @@
 "use client";
-import { Option, Select as HeadlessSelect } from "@mui/base";
+import { default as HeadlessSelect } from '@mui/base/Select';
+import { default as Option } from '@mui/base/Option';
+import { useId } from "react";
 
 interface Value {
-  value: string | number | boolean;
+  value: string | number;
   name: string;
 }
 
@@ -11,8 +13,28 @@ interface Props {
   className?: string;
   listBoxClassName?: string;
   defaultValue?: string;
-  onChange: (event: unknown, value: string | null) => void
+  onChange: (event: unknown, value: string | null) => void;
+  id?: string;
 }
+
+interface SelectWithLabelProps extends Props {
+  label: string;
+  containerClassName?: string;
+  labelClassName?: string;
+}
+
+function SelectWithLabel({ label, containerClassName, labelClassName, ...selectProps }: SelectWithLabelProps) {
+  const id = useId();
+
+  return <div className={containerClassName}>
+    <label htmlFor={id} className={labelClassName}>{label}</label>
+    <Select {...selectProps} id={id} />
+  </div>
+}
+
+const selectOptionsMap = ({ value, name }: Value) => (
+  <Option value={value} key={`${value}-${name}`} className="cursor-pointer">{name}</Option>
+);
 
 function Select<TValue extends Value, Multiple extends boolean>({
   values,
@@ -20,10 +42,12 @@ function Select<TValue extends Value, Multiple extends boolean>({
   listBoxClassName,
   defaultValue,
   onChange,
+  id,
 }: Props) {
   return (
     <HeadlessSelect
       onChange={onChange}
+      id={id}
       defaultValue={defaultValue}
       slotProps={{
         root: ({ focusVisible, open }) => ({
@@ -37,11 +61,9 @@ function Select<TValue extends Value, Multiple extends boolean>({
       }}
       className={className}
     >
-        {values.map(({ value, name }) => (
-          <Option value={value} key={`${value}-${name}`} className="cursor-pointer">{name}</Option>
-        ))}
+      {values.map(selectOptionsMap)}
     </HeadlessSelect>
   );
 }
 
-export default Select;
+export { Select as default, SelectWithLabel };

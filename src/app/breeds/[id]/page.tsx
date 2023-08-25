@@ -12,9 +12,9 @@ interface PageProps {
   params: { id: string };
 }
 
-const getBreed = async (breedId: string) => {
+const getBreed = async (breedId: string): Promise<CatImageData[]> => {
   const res = await api.breeds.getImages({ breed: breedId, limit: 10 });
-  return res.data;
+  return res.json();
 };
 
 export default function Page({ params }: PageProps) {

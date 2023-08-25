@@ -1,9 +1,6 @@
-import { AxiosResponse } from "axios";
-import instance from "./axios-interceptors";
-import queryString from "query-string";
+import instance from "./fetch-instance";
 import { Sort } from "../common/enums";
-
-type FetchedDataType<T> = Promise<AxiosResponse<T>>;
+import queryString from "../helpers/query-string";
 
 interface Breed {
   id: string;
@@ -29,35 +26,40 @@ interface GetImagesParam {
   order?: Sort;
   has_breeds?: 0 | 1;
   breed?: string | null;
+  imageType?: string;
 }
 
 type ApiFetchedDataType = {
   breeds: {
-    getAll: () => FetchedDataType<Breed[]>;
-    getImages: (param: GetImagesParam) => FetchedDataType<CatImageData[]>;
+    getAll: () => Promise<Response>;
+    getImages: (param: GetImagesParam) => Promise<Response>;
+    uploadImage: (data: FormData) => Promise<Response>;
   };
 };
 
-const filterImage = (breedImg: CatImageData) => Array.isArray(breedImg.breeds) && breedImg.breeds.length;
+const filterImage = (breedImg: CatImageData) =>
+  Array.isArray(breedImg.breeds) && breedImg.breeds.length;
 
 export const api: ApiFetchedDataType = {
   breeds: {
-    getImages: async ({ limit, page, order, has_breeds, breed }) => {
-      const stringifiedParams = queryString.stringify({
+    getImages: ({ limit, page, order, has_breeds, breed, imageType }) => {
+      const stringifiedParams = queryString({
         limit,
         page,
         order: order ?? Sort.ASC,
         has_breeds,
         breed_ids: breed ? `${breed}` : undefined,
+        mime_types: imageType
       });
 
-      const response = (await instance.get(`/images/search?${stringifiedParams}`));
-      
-      response.data = response.data.filter(filterImage);
-
-      return response;
+      return instance.request<CatImageData[]>(
+        `/images/search?${stringifiedParams}`,
+        "GET"
+      );
     },
-    getAll: () => instance.get("/breeds"),
+    getAll: () => instance.request<Breed[]>("/breeds", "GET"),
+    uploadImage: (data: FormData) =>
+      instance.request<void>("/images/upload", "POST", data),
   },
 };
 
