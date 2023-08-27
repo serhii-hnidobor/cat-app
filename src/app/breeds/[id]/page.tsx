@@ -7,6 +7,7 @@ import BreedImgView from "./components/breed-img-slider";
 import BreedDescription from "./components/breed-description";
 import isLoading from "@/app/helpers/is-loading";
 import PageContentContainer from "@/app/components/clients/Page-content-container";
+import { useCallback } from "react";
 
 interface PageProps {
   params: { id: string };
@@ -20,9 +21,11 @@ const getBreed = async (breedId: string): Promise<CatImageData[]> => {
 export default function Page({ params }: PageProps) {
   const { id: breedId } = params;
 
+  const imageApiCallFunction = useCallback(() => getBreed(breedId), [breedId]);
+
   const { data: imageData, dataStatus: imageDataStatus } = useApi<
     CatImageData[]
-  >({ apiCallFunc: () => getBreed(breedId), depsArray: [] });
+  >({ apiCallFunc: imageApiCallFunction });
 
   const control = <ControlPanel breedId={breedId} />;
 

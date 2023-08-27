@@ -2,22 +2,36 @@
 
 import PageContentContainer from "@/app/components/clients/Page-content-container";
 import ControlSection from "./components/Controll-section";
-import { useApi } from "../hooks/use-api";
-import { addFavorite, getFavoriteLogs, getFavorites } from "../api/favorites";
+import {
+  Favorites,
+  addFavorite,
+  getFavoriteLogs,
+  getFavorites,
+} from "../api/favorites";
 import isLoading from "../helpers/is-loading";
 import CatGrid from "../components/clients/Сat-grid";
-import { useState } from "react";
+import { useCallback, useEffect, useState } from "react";
 import SimpleBar from "simplebar-react";
 import { MessageContainer } from "@/app/voting/components/Vote-message-container";
+import { DataStatus } from "../common/enums";
 
 function FavoritePage() {
   const controlSectionElement = <ControlSection />;
-  const [rerender, setRerender] = useState(false);
+  const [favoritesData, setFavoritesData] = useState<Favorites[]>([]);
+  const [favoritesDataStatus, setFavoritesDataStatus] = useState<DataStatus>(
+    DataStatus.IDLE
+  );
+  const getFavoritesFunc = useCallback(() => getFavorites(), []);
 
-  const { data: favoritesData, dataStatus: favoritesDataStatus } = useApi({
-    apiCallFunc: getFavorites,
-    depsArray: [rerender],
-  });
+  useEffect(() => {
+    const fetchFavorites = async () => {
+      setFavoritesDataStatus(DataStatus.IDLE);
+      const favorites = await getFavorites();
+      setFavoritesData(favorites);
+      setFavoritesDataStatus(DataStatus.SUCCESS);
+    };
+    fetchFavorites();
+  }, []);
 
   const preparedData = favoritesData?.map(({ image }) => ({ ...image }));
 
@@ -38,8 +52,11 @@ function FavoritePage() {
           breedImages={preparedData ?? []}
           hasMore={false}
           onCatClick={async (_, imageId) => {
+            setFavoritesDataStatus(DataStatus.PENDING);
             await addFavorite(imageId);
-            setRerender((prev) => !prev);
+            const updatedFavorites = await getFavorites();
+            setFavoritesData(updatedFavorites);
+            setFavoritesDataStatus(DataStatus.SUCCESS);
           }}
         />
       </SimpleBar>

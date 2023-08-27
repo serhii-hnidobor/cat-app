@@ -5,7 +5,13 @@ import { useApi } from "../hooks/use-api";
 import getMoreImages from "../hooks/use-cat-search-control/helpers/get-more-images";
 import { DataStatus, ImageType, Sort } from "../common/enums";
 import { CatImageData, Vote, api } from "@/app/api/api";
-import { Dispatch, SetStateAction, useEffect, useState } from "react";
+import {
+  Dispatch,
+  SetStateAction,
+  useCallback,
+  useEffect,
+  useState,
+} from "react";
 import Image from "next/image";
 import PageContentContainer from "../components/clients/Page-content-container";
 import ControlSection from "./components/Controll-section";
@@ -27,7 +33,7 @@ async function vote(
   setImageIndex((prev) => prev + 1);
 }
 
-async function getVotes() {
+async function getVotes(imageIndex?: number) {
   const response = await api.breeds.getVotes();
 
   return response.json() as Promise<Vote[]>;
@@ -57,22 +63,28 @@ export default function Voting() {
   );
   const [imageIndex, setImageIndex] = useState(0);
 
+  const getVotesApiCall = useCallback(() => getVotes(imageIndex), [imageIndex]);
+
   const { data: votesData, dataStatus: newVoteDataStatus } = useApi<Vote[]>({
-    apiCallFunc: getVotes,
-    depsArray: [imageIndex],
+    apiCallFunc: getVotesApiCall,
   });
 
-  const { data, dataStatus } = useApi<{
-    images: CatImageData[];
-  }>({
-    apiCallFunc: getMoreImages({
+  const getMoreImageApiCall = useCallback(() => {
+    const func = getMoreImages({
       itemsPerPage: 1,
       pageIndex: imageIndex,
       breed: null,
       sortOrder: Sort.RANDOM,
       imageType: ImageType.STATIC,
-    }),
-    depsArray: [imageIndex],
+    });
+
+    return func();
+  }, [imageIndex]);
+
+  const { data, dataStatus } = useApi<{
+    images: CatImageData[];
+  }>({
+    apiCallFunc: getMoreImageApiCall,
   });
 
   useEffect(() => {

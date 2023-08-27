@@ -3,10 +3,9 @@ import { useEffect, useState } from "react";
 
 interface Arg<T> {
   apiCallFunc: () => Promise<T>;
-  depsArray: unknown[];
 }
 
-export const useApi = <T>({ apiCallFunc, depsArray }: Arg<T>) => {
+export const useApi = <T>({ apiCallFunc }: Arg<T>) => {
   const [dataStatus, setDataStatus] = useState<DataStatus>(DataStatus.IDLE);
   const [data, setData] = useState<T | null>(null);
 
@@ -21,7 +20,7 @@ export const useApi = <T>({ apiCallFunc, depsArray }: Arg<T>) => {
         console.error(e);
         setDataStatus(DataStatus.FAILED);
       });
-  }, [...depsArray]);
+  }, [apiCallFunc]);
 
   return { data, dataStatus };
 };

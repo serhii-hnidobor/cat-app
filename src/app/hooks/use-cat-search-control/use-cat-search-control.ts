@@ -1,4 +1,4 @@
-import { useState } from "react";
+import { useCallback, useState } from "react";
 import { ImageType, Sort } from "../../common/enums";
 import { Breed, CatImageData, api } from "../../api/api";
 import getMoreImages from "./helpers/get-more-images";
@@ -17,19 +17,13 @@ function useCatSearchControl() {
   const [sortOrder, setSortOrder] = useState<Sort>(Sort.ASC);
   const [imageType, setImageType] = useState<ImageType>(ImageType.ALL);
 
-  const { data: breedsData, dataStatus: breedsDataStatus } = useApi<Breed[]>({
-    apiCallFunc: async () => {
-      const res = await api.breeds.getAll();
-      return res.json() as Promise<Breed[]>;
-    },
-    depsArray: [],
-  });
+  const breedApiCallFunction = useCallback(async () => {
+    const res = await api.breeds.getAll();
+    return res.json() as Promise<Breed[]>;
+  }, []);
 
-  const { dataStatus: imagesDataStatus } = useApi<{
-    images: CatImageData[];
-    totalImages: number;
-  }>({
-    apiCallFunc: getMoreImages({
+  const getMoreImageApiCallFunction = useCallback(() => {
+    const func = getMoreImages({
       itemsPerPage,
       pageIndex,
       onAllImagesChange: setAllImages,
@@ -37,8 +31,20 @@ function useCatSearchControl() {
       breed: curBreedId,
       sortOrder,
       imageType,
-    }),
-    depsArray: [pageIndex, curBreedId, itemsPerPage, sortOrder, imageType],
+    });
+
+    return func();
+  }, [pageIndex, curBreedId, itemsPerPage, sortOrder, imageType]);
+
+  const { data: breedsData, dataStatus: breedsDataStatus } = useApi<Breed[]>({
+    apiCallFunc: breedApiCallFunction,
+  });
+
+  const { dataStatus: imagesDataStatus } = useApi<{
+    images: CatImageData[];
+    totalImages: number;
+  }>({
+    apiCallFunc: getMoreImageApiCallFunction,
   });
 
   const hasMore = isHasMore(allImages, totalImages);
