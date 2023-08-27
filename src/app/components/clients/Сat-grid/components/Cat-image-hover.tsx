@@ -21,6 +21,7 @@ const LikeButton = ({
   <Button
     className="flex justify-center items-center w-[40px] h-[40px] rounded-[10px] bg-white"
     {...restProps}
+    aria-label="add image to favorite"
   >
     {isInFavorite ? (
       <FilledHeart />
@@ -37,7 +38,7 @@ function CatImageHover({ isLikeHover, img }: Props) {
     <div
       className={clsx(
         "justify-center items-center cursor-pointer bg-[#FF868E99] w-full h-full p-[10px] rounded-[20px] group-hover:flex hidden relative",
-        { "!items-end": !isLikeHover }
+        { "!items-end": !isLikeHover },
       )}
     >
       {isLikeHover ? (

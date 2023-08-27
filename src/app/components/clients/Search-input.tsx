@@ -46,6 +46,7 @@ function SearchInput({ placeholder, onSearch }: Props) {
       <button
         onClick={() => onSearch(searchValue)}
         className="w-10 h-10 rounded-[10px] absolute top-[10px] right-[10px] flex justify-center items-center bg-[#FBE0DC]"
+        aria-label="search"
       >
         <SearchIcon />
       </button>

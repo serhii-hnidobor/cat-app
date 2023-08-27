@@ -9,6 +9,7 @@ function BackButton({ onClick }: Props) {
     <Button
       onClick={onClick}
       className="w-[40px] h-[40px] rounded-[10px] bg-[#FBE0DC] flex justify-center items-center"
+      aria-label="back to prev page"
     >
       <svg
         xmlns="http://www.w3.org/2000/svg"

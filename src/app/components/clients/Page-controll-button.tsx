@@ -9,7 +9,7 @@ import { useRouter, usePathname } from "next/navigation";
 
 function getButtonStyle(
   type: "like" | "favorite" | "dislike",
-  pathname: string
+  pathname: string,
 ) {
   const activeStyle = {
     class: "!bg-[#FF868E]",
@@ -47,15 +47,16 @@ function PageControlButton() {
       <Button
         className={clsx(
           "w-[60px] h-[60px] rounded-[20px] bg-white hover:bg-[#FBE0DC] flex justify-center items-center group",
-          likeButtonStyle.class
+          likeButtonStyle.class,
         )}
         onClick={() => router.push("/likes")}
+        aria-label="go to likes page"
       >
         <LikeIcon
           className="group"
           pathClassName={clsx(
             "group-hover:fill-white fill-[#ff748b]",
-            likeButtonStyle.iconPathClass
+            likeButtonStyle.iconPathClass,
           )}
         />
       </Button>
@@ -63,29 +64,31 @@ function PageControlButton() {
         onClick={() => router.push("/favorites")}
         className={clsx(
           "w-[60px] h-[60px] rounded-[20px] bg-white hover:bg-[#FBE0DC] flex justify-center items-center group",
-          favoriteButtonStyle.class
+          favoriteButtonStyle.class,
         )}
+        aria-label="go to favorites page"
       >
         <HeartIcon
           className="group"
           pathClassName={clsx(
             "group-hover:fill-white fill-[#ff748b]",
-            favoriteButtonStyle.iconPathClass
+            favoriteButtonStyle.iconPathClass,
           )}
         />
       </Button>
       <Button
         className={clsx(
           "w-[60px] h-[60px] rounded-[20px] bg-white hover:bg-[#FBE0DC] flex justify-center items-center group",
-          dislikeButtonStyle.class
+          dislikeButtonStyle.class,
         )}
         onClick={() => router.push("/dislikes")}
+        aria-label="go to dislikes page"
       >
         <DislikeIcon
           className="group"
           pathClassName={clsx(
             "group-hover:fill-white fill-[#ff748b]",
-            dislikeButtonStyle.iconPathClass
+            dislikeButtonStyle.iconPathClass,
           )}
         />
       </Button>

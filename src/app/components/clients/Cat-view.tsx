@@ -44,7 +44,7 @@ function CatView({
   const containerRef = useRef<HTMLDivElement | null>(null);
 
   const handleCatClick =
-    onCatClick || ((breedId: string) => router.push(`/breeds/${breedId}`));
+    onCatClick ?? ((breedId: string) => router.push(`/breeds/${breedId}`));
 
   const onScroll = handleInfiniteScroll({
     containerRef,
@@ -68,7 +68,11 @@ function CatView({
         isLikeHover={isLikeHover}
         isDisableHover={isDisableHover}
       />
-      <Loader isLoading={isLoading} />
+      {isLoading && (
+        <div className="flex justify-center items-center">
+          <ClipLoader color="#FF868E" size={30} />
+        </div>
+      )}
     </SimpleBar>
   );
 }

@@ -21,7 +21,7 @@ type Props = {
 
 const imageUploadProcess = (
   uploadPromise: Promise<unknown>,
-  setDataStatus: Dispatch<SetStateAction<DataStatus>>
+  setDataStatus: Dispatch<SetStateAction<DataStatus>>,
 ) =>
   uploadPromise
     .then(() => setDataStatus(DataStatus.SUCCESS))
@@ -66,6 +66,7 @@ const LoadImageModal = ({ isOpen, onClose }: Props) => {
             <Button
               className="absolute top-5 right-5 w-10 h-10 bg-white rounded-[10px] flex justify-center items-center"
               onClick={onClose}
+              aria-label="close modal"
             >
               <CloseIcon />
             </Button>
@@ -87,7 +88,7 @@ const LoadImageModal = ({ isOpen, onClose }: Props) => {
             </div>
             <Dropzone
               onFileUpload={onFileUpload}
-              isLoading={isLoading(dataStatus)}
+              isLoading={dataStatus === DataStatus.PENDING}
               isImageAcceptError={isRejected(dataStatus)}
               isSuccess={isSuccess(dataStatus)}
               isRejected={isRejected(dataStatus)}

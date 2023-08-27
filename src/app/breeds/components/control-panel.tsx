@@ -116,6 +116,7 @@ function ControlPanel(props: Props) {
           activeSortButtonClass: isSortAsc,
         })}
         onClick={() => props.handleSortChange(Sort.ASC)}
+        aria-label="sort by alphabet ascending"
       >
         <AlphabetSortAsc
           fill={getSortIconFillColor(props.sortOrder, Sort.ASC)}
@@ -127,6 +128,7 @@ function ControlPanel(props: Props) {
           activeSortButtonClass: !isSortAsc,
         })}
         onClick={() => props.handleSortChange(Sort.DESC)}
+        aria-label="sort by alphabet descending"
       >
         <AlphabetSortDesc
           fill={getSortIconFillColor(props.sortOrder, Sort.DESC)}

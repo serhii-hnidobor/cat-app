@@ -12,12 +12,12 @@ import { CatImageData } from "../api/api";
 
 const searchBreedName = (
   breedValues: SelectValue[],
-  searchBreedName: string | null
+  searchBreedName: string | null,
 ) =>
   searchBreedName
     ? breedValues.find(
         (breedData) =>
-          breedData.name.toLowerCase() === searchBreedName.toLowerCase()
+          breedData.name.toLowerCase() === searchBreedName.toLowerCase(),
       )?.value
     : undefined;
 

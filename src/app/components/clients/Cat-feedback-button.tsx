@@ -23,12 +23,13 @@ function CatFeedbackButton({
       {...containerProps}
       className={clsx(
         className,
-        "flex gap-1 bg-white rounded-[20px] border-[5px] border-solid border-white"
+        "flex gap-1 bg-white rounded-[20px] border-[5px] border-solid border-white",
       )}
     >
       <Button
         className="w-20 h-20 rounded-tl-[20px] rounded-bl-[20px] bg-[#7cf6b8] hover:bg-[#97eab94d] flex justify-center items-center group"
         onClick={onVoteLike}
+        aria-label="add like"
       >
         <LikeIcon
           className="group"
@@ -38,6 +39,7 @@ function CatFeedbackButton({
       <Button
         onClick={onFavorite}
         className="w-20 h-20 bg-[#ff748b] hover:bg-[#ffd7dd] flex justify-center items-center group"
+        aria-label="add to favorite"
       >
         <HeartIcon
           className="group"
@@ -47,6 +49,7 @@ function CatFeedbackButton({
       <Button
         className="w-20 h-20 bg-[#ffd977] hover:bg-[#fef5d7] flex justify-center items-center rounded-tr-[20px] rounded-br-[20px] group"
         onClick={onVoteDislike}
+        aria-label="add dislike"
       >
         <DislikeIcon
           className="group"
