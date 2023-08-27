@@ -15,6 +15,7 @@ interface Props {
   defaultValue?: string;
   onChange: (event: unknown, value: string | null) => void;
   id?: string;
+  ariaLabel: string;
 }
 
 interface SelectWithLabelProps extends Props {
@@ -27,6 +28,7 @@ function SelectWithLabel({
   label,
   containerClassName,
   labelClassName,
+  ariaLabel,
   ...selectProps
 }: SelectWithLabelProps) {
   const id = useId();
@@ -36,7 +38,7 @@ function SelectWithLabel({
       <label htmlFor={id} className={labelClassName}>
         {label}
       </label>
-      <Select {...selectProps} id={id} />
+      <Select {...selectProps} id={id} ariaLabel={ariaLabel} />
     </div>
   );
 }
@@ -54,9 +56,11 @@ function Select<TValue extends Value, Multiple extends boolean>({
   defaultValue,
   onChange,
   id,
+  ariaLabel,
 }: Props) {
   return (
     <HeadlessSelect
+      aria-label={ariaLabel}
       onChange={onChange}
       id={id}
       defaultValue={defaultValue}

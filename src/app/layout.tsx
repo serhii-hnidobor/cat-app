@@ -2,7 +2,7 @@ import type { Metadata } from "next";
 import { Jost } from "next/font/google";
 import Nav from "./components/nav";
 import { Logo } from "./components/icons/Logo";
-//import SearchInput from "./components/clients/Search-input";
+import { Analytics } from "@vercel/analytics/react";
 
 import "simplebar-react/dist/simplebar.min.css";
 import "swiper/css";
@@ -33,6 +33,7 @@ export default function RootLayout({
           </div>
           <div>{children}</div>
         </div>
+        <Analytics />
       </body>
     </html>
   );

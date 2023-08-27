@@ -57,7 +57,7 @@ function CatView({
 
   return (
     <SimpleBar
-      className={clsx({ "h-[768px]": !isClassProvided }, className)}
+      className={clsx({ "h-[748px]": !isClassProvided }, className)}
       id={id}
       scrollableNodeProps={{ ref: containerRef, onScroll }}
     >

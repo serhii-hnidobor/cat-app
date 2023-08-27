@@ -72,6 +72,7 @@ function SelectBlock({
           onCurBreedIdChange,
           onPageIndexChange,
         })}
+        ariaLabel="breed select"
       />
       <Select
         values={[5, 10, 15, 20, 25].map((num) => ({
@@ -81,6 +82,7 @@ function SelectBlock({
         defaultValue={"10"}
         className="w-[101px] rounded-[10px] bg-[#F8F8F7]"
         listBoxClassName="!w-[101px] max-h-[300px]"
+        ariaLabel="page limit select"
         onChange={(_, value) => {
           const newItemPerPage = Number(value);
           if (!Number.isNaN(newItemPerPage)) {

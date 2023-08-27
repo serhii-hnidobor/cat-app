@@ -123,6 +123,7 @@ function SelectBlock({
         className="w-[290px] rounded-[10px] bg-[#F8F8F7] text-gray-500"
         listBoxClassName="!w-[290px] max-h-[300px] overflow-y-auto"
         onChange={onSortChange}
+        ariaLabel="sorting select"
       />
       <SelectWithLabel
         label="type"
@@ -136,6 +137,7 @@ function SelectBlock({
         className="w-[290px] rounded-[10px] bg-[#F8F8F7] text-gray-500"
         listBoxClassName="!w-[290px] max-h-[300px] overflow-y-auto"
         onChange={onImageTypeChange}
+        ariaLabel="image type select"
       />
       <SelectWithLabel
         label="type"
@@ -149,6 +151,7 @@ function SelectBlock({
           onCurBreedIdChange,
           onPageIndexChange,
         })}
+        ariaLabel="breed select"
       />
       <div className="flex gap-[10px] relative items-end">
         <SelectWithLabel
@@ -159,6 +162,7 @@ function SelectBlock({
             name: `${num} items per page`,
           }))}
           defaultValue={"10"}
+          ariaLabel="page limit select"
           className="w-[240px] rounded-[10px] bg-[#F8F8F7] text-gray-500"
           listBoxClassName="!w-[240px] max-h-[300px] overflow-y-auto"
           containerClassName="w-[240px]"

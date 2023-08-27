@@ -23,7 +23,7 @@ function CatViewWithoutInfiniteScroll({
   const isClassProvided = className?.length;
 
   return (
-    <SimpleBar className={clsx({ "h-[768px]": !isClassProvided }, className)}>
+    <SimpleBar className={clsx({ "h-[748px]": !isClassProvided }, className)}>
       <CatGrid
         breedImages={allImages || []}
         hasMore={Boolean(hasMore)}
