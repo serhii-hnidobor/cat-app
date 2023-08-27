@@ -4,19 +4,21 @@ import clsx from "clsx";
 import isValidUrl from "@/app/helpers/is-valid-url";
 import CatImageHover from "./components/Cat-image-hover";
 import Image from "next/image";
+import { imageBlurBase64 } from "@/app/common/constants";
 
 interface Props {
   breedImages: CatImageData[];
   hasMore?: boolean;
-  onCatClick: (breedId: string) => void;
+  onCatClick: (breedId: string, imageId: string) => void;
   isLikeHover?: boolean;
 }
 
-const isPriorityImage = (blockIndex:number, width:number) => !blockIndex && width >= 420; 
+const isPriorityImage = (blockIndex: number, width: number) =>
+  !blockIndex && width >= 420;
 
 const getBlockMap = (
   blockIndex: number,
-  onCatClick: (breedId: string) => void,
+  onCatClick: (breedId: string, imageId: string) => void,
   isLikeHover?: boolean
 ) => {
   const mapFunc = (img: CatImageData, imgIndex: number) => {
@@ -29,7 +31,7 @@ const getBlockMap = (
     return (
       <div
         key={`cat-img-${img.url}`}
-        onClick={() => onCatClick(img.breeds[0].id)}
+        onClick={() => onCatClick(img?.breeds?.[0]?.id ?? "", img?.id)}
         className={clsx(imageStyles, "group relative")}
       >
         <Image
@@ -38,13 +40,15 @@ const getBlockMap = (
           width={width}
           priority={isPriorityImage(blockIndex, width)}
           height={height}
+          placeholder="blur"
+          blurDataURL={imageBlurBase64}
           className={clsx(
             { "opacity-0": !isValidUrl(img.url) },
             `rounded-[20px] cursor-pointer bg-no-repeat bg-cover bg-center w-full h-full object-cover`
           )}
         />
-        <div className='absolute left-0 top-0' style={{ width, height }}>
-        {<CatImageHover isLikeHover={isLikeHover} img={img} />}
+        <div className="absolute left-0 top-0" style={{ width, height }}>
+          {<CatImageHover isLikeHover={isLikeHover} img={img} />}
         </div>
       </div>
     );

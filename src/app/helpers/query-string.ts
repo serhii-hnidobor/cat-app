@@ -18,8 +18,6 @@ const prepareParam = (
 function queryString(param: Record<string, string | undefined | number>) {
   prepareParam(param);
 
-  console.log(param);
-
   return new URLSearchParams(param as Record<string, string>).toString();
 }
 

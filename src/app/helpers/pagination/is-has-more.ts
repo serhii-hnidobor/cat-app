@@ -1,7 +1,7 @@
 const isHasMore = (
   allItemsArray: unknown[] | null = [],
   totalItemsNum: number | null = 0
-) =>
+): boolean =>
   Boolean(
     allItemsArray &&
       totalItemsNum &&

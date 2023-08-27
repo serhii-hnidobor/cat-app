@@ -32,10 +32,8 @@ interface Props {
 
 type HandleBreedSelectArg = Pick<
   Props,
-  'onAllImageChange' |
-  'onCurBreedIdChange' |
-  'onPageIndexChange'
->
+  "onAllImageChange" | "onCurBreedIdChange" | "onPageIndexChange"
+>;
 
 const handleBreedSelectChange = ({
   onAllImageChange,
@@ -65,24 +63,30 @@ interface HandleImageTypeChangeArg {
   onAllImageChange: Dispatch<SetStateAction<CatImageData[] | null>>;
 }
 
-const getHandleImageTypeChange = ({ onAllImageChange, onImageTypeChange }: HandleImageTypeChangeArg) => {
+const getHandleImageTypeChange = ({
+  onAllImageChange,
+  onImageTypeChange,
+}: HandleImageTypeChangeArg) => {
   return (_: unknown, newSortValue: string | null) => {
     onImageTypeChange(newSortValue as ImageType);
     onAllImageChange([]);
-  }
-}
+  };
+};
 
 interface HandleSortChangeArg {
   onSortChange: (sortOrder: Sort) => void;
   onAllImageChange: Dispatch<SetStateAction<CatImageData[] | null>>;
 }
 
-const getHandleSortChange = ({ onAllImageChange, onSortChange }: HandleSortChangeArg) => {
+const getHandleSortChange = ({
+  onAllImageChange,
+  onSortChange,
+}: HandleSortChangeArg) => {
   return (_: unknown, newSortValue: string | null) => {
     onSortChange(newSortValue as Sort);
     onAllImageChange([]);
-  }
-}
+  };
+};
 
 function SelectBlock({
   onCurBreedIdChange,
@@ -94,18 +98,27 @@ function SelectBlock({
   handleImageTypeChange,
   onLoadMore,
   imagesDataStatus,
-  haveMore
+  haveMore,
 }: Props) {
-
-  const onSortChange = getHandleSortChange({ onAllImageChange, onSortChange: handleSortChange })
-  const onImageTypeChange = getHandleImageTypeChange({ onAllImageChange, onImageTypeChange: handleImageTypeChange });
+  const onSortChange = getHandleSortChange({
+    onAllImageChange,
+    onSortChange: handleSortChange,
+  });
+  const onImageTypeChange = getHandleImageTypeChange({
+    onAllImageChange,
+    onImageTypeChange: handleImageTypeChange,
+  });
 
   return (
     <div className="w-full h-[156px] bg-[#F8F8F7] rounded-[20px] grid grid-cols-2 grid-rows-2 gap-x-[20px] gap-y-[10px] px-5 pb-5 pt-[10px]">
       <SelectWithLabel
         label="order"
         labelClassName="uppercase ml-[10px] text-[#8C8C8C] non-italic leading-[18px] font-medium text-[10px]"
-        values={[{ value: Sort.ASC, name: 'Asc' }, { value: Sort.DESC, name: 'Desc' }, { value: Sort.RANDOM, name: 'Random' }]}
+        values={[
+          { value: Sort.ASC, name: "Asc" },
+          { value: Sort.DESC, name: "Desc" },
+          { value: Sort.RANDOM, name: "Random" },
+        ]}
         defaultValue={Sort.RANDOM}
         className="w-[290px] rounded-[10px] bg-[#F8F8F7] text-gray-500"
         listBoxClassName="!w-[290px] max-h-[300px] overflow-y-auto"
@@ -114,7 +127,11 @@ function SelectBlock({
       <SelectWithLabel
         label="type"
         labelClassName="uppercase ml-[10px] text-[#8C8C8C] non-italic leading-[18px] font-medium text-[10px]"
-        values={[{ value: ImageType.ALL, name: 'All' }, { value: ImageType.ANIMATED, name: 'Animated' }, { value: ImageType.STATIC, name: 'Static' }]}
+        values={[
+          { value: ImageType.ALL, name: "All" },
+          { value: ImageType.ANIMATED, name: "Animated" },
+          { value: ImageType.STATIC, name: "Static" },
+        ]}
         defaultValue={ImageType.ALL}
         className="w-[290px] rounded-[10px] bg-[#F8F8F7] text-gray-500"
         listBoxClassName="!w-[290px] max-h-[300px] overflow-y-auto"
@@ -131,7 +148,6 @@ function SelectBlock({
           onAllImageChange,
           onCurBreedIdChange,
           onPageIndexChange,
-
         })}
       />
       <div className="flex gap-[10px] relative items-end">
@@ -154,7 +170,11 @@ function SelectBlock({
             }
           }}
         />
-        <LoadMoreButton onClick={onLoadMore} isLoading={isLoading(imagesDataStatus)} disabled={!haveMore} />
+        <LoadMoreButton
+          onClick={onLoadMore}
+          isLoading={isLoading(imagesDataStatus)}
+          disabled={!haveMore}
+        />
       </div>
     </div>
   );
@@ -174,7 +194,7 @@ function ControlPanel(props: Props) {
             </span>
           </div>
         </div>
-        <UploadCatImageButton onClick={props.handleUploadImage}/>
+        <UploadCatImageButton onClick={props.handleUploadImage} />
       </div>
       <SelectBlock {...props} />
     </div>

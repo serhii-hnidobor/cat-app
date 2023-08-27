@@ -6,7 +6,7 @@ import DropzoneInstruction from "./components/Dropzone-instruction";
 import UploadButton from "./components/Upload-button";
 import { clsx } from "clsx";
 import DropzoneMessage from "./components/Dropzone-message";
-import Image from 'next/image';
+import Image from "next/image";
 
 interface Props {
   onFileUpload: (file: File) => unknown;
@@ -64,7 +64,7 @@ function Dropzone({
           <Image
             className="w-full h-full bg-cover bg-center z-[5] object-cover"
             src={URL.createObjectURL(file)}
-            alt={'uploaded cat'}
+            alt={"uploaded cat"}
             width={558}
             height={280}
           />

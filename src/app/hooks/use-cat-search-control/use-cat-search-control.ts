@@ -17,7 +17,7 @@ function useCatSearchControl() {
   const [sortOrder, setSortOrder] = useState<Sort>(Sort.ASC);
   const [imageType, setImageType] = useState<ImageType>(ImageType.ALL);
 
-  const { data: breedsData } = useApi<Breed[]>({
+  const { data: breedsData, dataStatus: breedsDataStatus } = useApi<Breed[]>({
     apiCallFunc: async () => {
       const res = await api.breeds.getAll();
       return res.json() as Promise<Breed[]>;
@@ -36,7 +36,7 @@ function useCatSearchControl() {
       onTotalImagesChange: setTotalImages,
       breed: curBreedId,
       sortOrder,
-      imageType
+      imageType,
     }),
     depsArray: [pageIndex, curBreedId, itemsPerPage, sortOrder, imageType],
   });
@@ -72,6 +72,7 @@ function useCatSearchControl() {
     sortOrder,
     setSortOrder,
     handleGetMore,
+    breedsDataStatus,
   };
 }
 

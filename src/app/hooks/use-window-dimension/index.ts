@@ -1,24 +1,26 @@
-import { useState, useEffect } from 'react';
+import { useState, useEffect } from "react";
 
 function getWindowDimensions() {
-  if(!window){
+  if (typeof window === "undefined") {
     return {
       width: 0,
       height: 0,
-    }
+    };
   }
 
   const { innerWidth: width, innerHeight: height } = window;
   return {
     width,
-    height
+    height,
   };
 }
 
 export default function useWindowDimensions() {
-  const [windowDimensions, setWindowDimensions] = useState(getWindowDimensions());
+  const [windowDimensions, setWindowDimensions] = useState(
+    getWindowDimensions()
+  );
   useEffect(() => {
-    if(!window){
+    if (typeof window === "undefined") {
       return;
     }
 
@@ -26,10 +28,9 @@ export default function useWindowDimensions() {
       setWindowDimensions(getWindowDimensions());
     }
 
-    window.addEventListener('resize', handleResize);
-    return () => window.removeEventListener('resize', handleResize);
+    window.addEventListener("resize", handleResize);
+    return () => window.removeEventListener("resize", handleResize);
   }, []);
-
 
   return windowDimensions;
 }

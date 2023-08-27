@@ -5,7 +5,7 @@ interface Header {
 
 type Interceptor = () => Header;
 
-type HTTPRequest = "POST" | "GET";
+type HTTPRequest = "POST" | "GET" | "DELETE";
 
 function getContentType(data: Record<string, unknown> | FormData | undefined) {
   if (!data || data instanceof FormData) {
@@ -48,16 +48,16 @@ class Fetch {
     return resHeader;
   }
 
-  private getRequestData (data?: FormData | Record<string, unknown>){
+  private getRequestData(data?: FormData | Record<string, unknown>) {
     if (!data) {
       return null;
     }
-  
+
     if (data instanceof FormData) {
       return data;
     }
 
-      return JSON.stringify(data);
+    return JSON.stringify(data);
   }
 
   async request<T>(
@@ -65,7 +65,6 @@ class Fetch {
     requestType: HTTPRequest,
     data?: Record<string, unknown> | FormData
   ) {
-    console.log(data);
     const response = await fetch(`${this.#baseUrl}${url}`, {
       method: requestType,
       mode: "cors",

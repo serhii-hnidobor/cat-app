@@ -28,9 +28,9 @@ enum Sort {
 }
 
 enum ImageType {
-  ALL = 'jpg,gif,png',
-  STATIC = 'jpg,png',
-  ANIMATED = 'gif',
+  ALL = "jpg,gif,png",
+  STATIC = "jpg,png",
+  ANIMATED = "gif",
 }
 
 export { NavItemType, IconNames, AppRoutes, DataStatus, Sort, ImageType };

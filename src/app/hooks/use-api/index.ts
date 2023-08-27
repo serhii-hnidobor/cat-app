@@ -1,5 +1,5 @@
 import { DataStatus } from "@/app/common/enums";
-import { useCallback, useEffect, useState } from "react";
+import { useEffect, useState } from "react";
 
 interface Arg<T> {
   apiCallFunc: () => Promise<T>;

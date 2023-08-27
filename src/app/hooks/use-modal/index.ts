@@ -1,4 +1,4 @@
-import { MouseEventHandler, useCallback } from 'react';
+import { MouseEventHandler, useCallback } from "react";
 
 type UseModalPropsType = {
   onClose: () => void;

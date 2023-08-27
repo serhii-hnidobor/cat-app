@@ -2,10 +2,11 @@ import type { Metadata } from "next";
 import { Jost } from "next/font/google";
 import Nav from "./components/nav";
 import { Logo } from "./components/icons/Logo";
+//import SearchInput from "./components/clients/Search-input";
 
-import 'simplebar-react/dist/simplebar.min.css';
-import 'swiper/css';
-import 'swiper/css/pagination';
+import "simplebar-react/dist/simplebar.min.css";
+import "swiper/css";
+import "swiper/css/pagination";
 import "./globals.css";
 
 const jost = Jost({ subsets: ["latin"] });
@@ -22,13 +23,15 @@ export default function RootLayout({
 }) {
   return (
     <html lang="en">
-      <body className={`${jost.className} flex justify-center items-center min-h-screen`}>
+      <body
+        className={`${jost.className} flex justify-center items-center min-h-screen overflow-hidden`}
+      >
         <div className="my-[30px] mx-auto flex justify-between max-w-[1440px] w-[calc(100vw-187px)] relative">
           <div className="flex flex-col gap-[80px]">
             <Logo />
             <Nav />
           </div>
-          {children}
+          <div>{children}</div>
         </div>
       </body>
     </html>

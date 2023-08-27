@@ -6,8 +6,8 @@ interface GetMoreImagesProps {
   itemsPerPage: number;
   pageIndex: number;
   breed: string | null;
-  onTotalImagesChange: Dispatch<SetStateAction<number | null>>;
-  onAllImagesChange: Dispatch<SetStateAction<CatImageData[] | null>>;
+  onTotalImagesChange?: Dispatch<SetStateAction<number | null>>;
+  onAllImagesChange?: Dispatch<SetStateAction<CatImageData[] | null>>;
   sortOrder?: Sort;
   imageType?: string;
 }
@@ -36,9 +36,8 @@ const getMoreImages =
 
     const images: CatImageData[] = await apiResponse.json();
 
-    onTotalImagesChange(Number(totalImages));
-
-    onAllImagesChange((prev) => (prev ? prev.concat(images) : images));
+    onTotalImagesChange?.(Number(totalImages));
+    onAllImagesChange?.((prev) => (prev ? prev.concat(images) : images));
 
     return { images, totalImages: Number(totalImages) };
   };

@@ -35,7 +35,10 @@ const LoadImageModal = ({ isOpen, onClose }: Props) => {
   }, []);
 
   const { handleDisableContentContainerClick, handleOutsideClick } = useModal({
-    onClose: () => { setDataStatus(DataStatus.IDLE); onClose() },
+    onClose: () => {
+      setDataStatus(DataStatus.IDLE);
+      onClose();
+    },
   });
 
   const onFileUpload = async (image: File) => {
@@ -78,8 +81,8 @@ const LoadImageModal = ({ isOpen, onClose }: Props) => {
                   target="_blank"
                 >
                   upload guidelines
-                </a>&nbsp;
-                or face deletion.
+                </a>
+                &nbsp; or face deletion.
               </h3>
             </div>
             <Dropzone

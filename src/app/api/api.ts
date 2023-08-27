@@ -16,8 +16,9 @@ interface Breed {
 }
 
 interface CatImageData {
+  id: string;
   url: string;
-  breeds: Breed[];
+  breeds?: Breed[];
 }
 
 interface GetImagesParam {
@@ -29,16 +30,25 @@ interface GetImagesParam {
   imageType?: string;
 }
 
+interface Vote extends Record<string, unknown> {
+  id: number;
+  image_id: string;
+  value: 1 | 0;
+  created_at: string;
+}
+
 type ApiFetchedDataType = {
   breeds: {
     getAll: () => Promise<Response>;
     getImages: (param: GetImagesParam) => Promise<Response>;
     uploadImage: (data: FormData) => Promise<Response>;
+    vote: (image_id: string, isLike: boolean) => Promise<void>;
+    getVotes: () => Promise<Response>;
+    deleteFavorites: (id: string) => Promise<void>;
+    addToFavorites: (image_id: string) => Promise<Response>;
+    getFavorites: () => Promise<Response>;
   };
 };
-
-const filterImage = (breedImg: CatImageData) =>
-  Array.isArray(breedImg.breeds) && breedImg.breeds.length;
 
 export const api: ApiFetchedDataType = {
   breeds: {
@@ -49,7 +59,7 @@ export const api: ApiFetchedDataType = {
         order: order ?? Sort.ASC,
         has_breeds,
         breed_ids: breed ? `${breed}` : undefined,
-        mime_types: imageType
+        mime_types: imageType,
       });
 
       return instance.request<CatImageData[]>(
@@ -60,7 +70,20 @@ export const api: ApiFetchedDataType = {
     getAll: () => instance.request<Breed[]>("/breeds", "GET"),
     uploadImage: (data: FormData) =>
       instance.request<void>("/images/upload", "POST", data),
+    vote: async (image_id: string, isLike: boolean) => {
+      await instance.request("/votes", "POST", {
+        value: isLike ? 1 : 0,
+        image_id,
+      });
+    },
+    getVotes: () => instance.request<Vote[]>("/votes", "GET"),
+    deleteFavorites: async (id: string) => {
+      await instance.request(`/favourites/${id}`, "DELETE");
+    },
+    addToFavorites: (image_id: string) =>
+      instance.request("/favourites", "POST", { image_id }),
+    getFavorites: () => instance.request("/favourites", "GET"),
   },
 };
 
-export { type Breed, type CatImageData };
+export { type Breed, type CatImageData, type Vote };

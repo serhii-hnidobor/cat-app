@@ -33,7 +33,7 @@ const handleBreedSelectChange = ({
   | "breedsSelectValue"
   | "onItemsPerPageChange"
   | "handleSortChange"
-  | 'sortOrder'
+  | "sortOrder"
 >) => {
   return (_: unknown, value: string | null) => {
     if (!value) {
@@ -93,7 +93,8 @@ function SelectBlock({
   );
 }
 
-const getSortIconFillColor = (sortOrder: Sort, iconSortOrder: Sort) => sortOrder === iconSortOrder ? '#FF868E' : undefined;
+const getSortIconFillColor = (sortOrder: Sort, iconSortOrder: Sort) =>
+  sortOrder === iconSortOrder ? "#FF868E" : undefined;
 
 function ControlPanel(props: Props) {
   const router = useRouter();
@@ -101,7 +102,7 @@ function ControlPanel(props: Props) {
   const isSortAsc = props.sortOrder === Sort.ASC;
 
   return (
-    <div className="flex gap-[10px] mb-5">
+    <div className="flex gap-[10px]">
       <BackButton onClick={router.back} />
       <div className="w-[143px] h-[40px] bg-[#FF868E] rounded-[10px] flex justify-center items-center">
         <span className="uppercase text-xl text-white not-italic font-medium leading-[30px] tracking-[2px]">
@@ -109,11 +110,27 @@ function ControlPanel(props: Props) {
         </span>
       </div>
       <SelectBlock {...props} />
-      <Button className={clsx({ "w-[40px] h-[40px]": true, activeSortButtonClass: isSortAsc })} onClick={() => props.handleSortChange(Sort.ASC)}>
-        <AlphabetSortAsc fill={getSortIconFillColor(props.sortOrder, Sort.ASC)} />
+      <Button
+        className={clsx({
+          "w-[40px] h-[40px]": true,
+          activeSortButtonClass: isSortAsc,
+        })}
+        onClick={() => props.handleSortChange(Sort.ASC)}
+      >
+        <AlphabetSortAsc
+          fill={getSortIconFillColor(props.sortOrder, Sort.ASC)}
+        />
       </Button>
-      <Button className={clsx({ "w-[40px] h-[40px]": true, activeSortButtonClass: !isSortAsc })} onClick={() => props.handleSortChange(Sort.DESC)}>
-        <AlphabetSortDesc fill={getSortIconFillColor(props.sortOrder, Sort.DESC)} />
+      <Button
+        className={clsx({
+          "w-[40px] h-[40px]": true,
+          activeSortButtonClass: !isSortAsc,
+        })}
+        onClick={() => props.handleSortChange(Sort.DESC)}
+      >
+        <AlphabetSortDesc
+          fill={getSortIconFillColor(props.sortOrder, Sort.DESC)}
+        />
       </Button>
     </div>
   );
