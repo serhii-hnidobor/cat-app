@@ -12,6 +12,24 @@ interface GetMoreImagesProps {
   imageType?: string;
 }
 
+function findImageByUrl(targetImageUrl: string, imageArray: CatImageData[]) {
+  return imageArray.find((image) => image.url === targetImageUrl);
+}
+
+function getImageConcat(newImages: CatImageData[]) {
+  return (prevImages: CatImageData[] | null) => {
+    if (!prevImages) {
+      return newImages;
+    }
+
+    const imageToConcat = newImages.filter(
+      (newImage) => !findImageByUrl(newImage.url, prevImages)
+    );
+
+    return prevImages.concat(imageToConcat);
+  };
+}
+
 const getMoreImages =
   ({
     itemsPerPage,
@@ -36,8 +54,10 @@ const getMoreImages =
 
     const images: CatImageData[] = await apiResponse.json();
 
+    const imageConcat = getImageConcat(images);
+
     onTotalImagesChange?.(Number(totalImages));
-    onAllImagesChange?.((prev) => (prev ? prev.concat(images) : images));
+    onAllImagesChange?.(imageConcat);
 
     return { images, totalImages: Number(totalImages) };
   };

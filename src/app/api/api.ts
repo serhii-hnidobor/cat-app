@@ -35,6 +35,10 @@ interface Vote extends Record<string, unknown> {
   image_id: string;
   value: 1 | 0;
   created_at: string;
+  image: {
+    id: string;
+    url: string;
+  };
 }
 
 type ApiFetchedDataType = {

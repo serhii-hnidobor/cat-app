@@ -17,6 +17,7 @@ interface Props {
   className?: string;
   onCatClick?: (breedId: string, imageId: string) => void;
   isLikeHover?: boolean;
+  isDisableHover?: boolean;
 }
 
 const Loader = ({ isLoading }: { isLoading: boolean }) =>
@@ -34,6 +35,7 @@ function CatView({
   className,
   onCatClick,
   isLikeHover,
+  isDisableHover,
 }: Props) {
   const router = useRouter();
 
@@ -64,6 +66,7 @@ function CatView({
         hasMore={Boolean(hasMore)}
         onCatClick={handleCatClick}
         isLikeHover={isLikeHover}
+        isDisableHover={isDisableHover}
       />
       <Loader isLoading={isLoading} />
     </SimpleBar>

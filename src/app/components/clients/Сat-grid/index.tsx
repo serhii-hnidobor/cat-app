@@ -11,6 +11,7 @@ interface Props {
   hasMore?: boolean;
   onCatClick: (breedId: string, imageId: string) => void;
   isLikeHover?: boolean;
+  isDisableHover?: boolean;
 }
 
 const isPriorityImage = (blockIndex: number, width: number) =>
@@ -19,7 +20,8 @@ const isPriorityImage = (blockIndex: number, width: number) =>
 const getBlockMap = (
   blockIndex: number,
   onCatClick: (breedId: string, imageId: string) => void,
-  isLikeHover?: boolean
+  isLikeHover?: boolean,
+  isDisableHover?: boolean
 ) => {
   const mapFunc = (img: CatImageData, imgIndex: number) => {
     const {
@@ -48,7 +50,9 @@ const getBlockMap = (
           )}
         />
         <div className="absolute left-0 top-0" style={{ width, height }}>
-          {<CatImageHover isLikeHover={isLikeHover} img={img} />}
+          {!isDisableHover && (
+            <CatImageHover isLikeHover={isLikeHover} img={img} />
+          )}
         </div>
       </div>
     );
@@ -71,7 +75,13 @@ const addBlockPlaceholder = (
   }
 };
 
-function CatGrid({ breedImages, hasMore, onCatClick, isLikeHover }: Props) {
+function CatGrid({
+  breedImages,
+  hasMore,
+  onCatClick,
+  isLikeHover,
+  isDisableHover,
+}: Props) {
   const divideIntoBlocks = <T extends [][]>(
     array: unknown[],
     blockSize: number
@@ -89,7 +99,12 @@ function CatGrid({ breedImages, hasMore, onCatClick, isLikeHover }: Props) {
   addBlockPlaceholder(blocks, hasMore);
 
   return blocks.map((block, blockIndex) => {
-    const blockMapFunc = getBlockMap(blockIndex, onCatClick, isLikeHover);
+    const blockMapFunc = getBlockMap(
+      blockIndex,
+      onCatClick,
+      isLikeHover,
+      isDisableHover
+    );
 
     return (
       <div

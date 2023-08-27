@@ -13,6 +13,7 @@ function CatViewWithoutInfiniteScroll({
   className,
   onCatClick,
   isLikeHover,
+  isDisableHover,
 }: Omit<CatViewProps, "loadMore">) {
   const router = useRouter();
 
@@ -28,6 +29,7 @@ function CatViewWithoutInfiniteScroll({
         hasMore={Boolean(hasMore)}
         onCatClick={handleCatClick}
         isLikeHover={isLikeHover}
+        isDisableHover={isDisableHover}
       />
       <Loader isLoading={isLoading} />
     </SimpleBar>

@@ -1,10 +1,11 @@
-import { ReactNode } from "react";
+"use client";
+
+import { ReactNode, Suspense } from "react";
 import { ClipLoader } from "react-spinners";
 import SearchInput from "./Search-input";
 import queryString from "@/app/helpers/query-string";
 import { useRouter } from "next/navigation";
 import PageControlButton from "./Page-controll-button";
-import useWindowDimensions from "@/app/hooks/use-window-dimension";
 import { AppRouterInstance } from "next/dist/shared/lib/app-router-context";
 import OnlyDesktopWarning from "./Only-desktop-warning";
 
@@ -25,6 +26,8 @@ interface NothingFoundMessageProps {
   content: ReactNode;
   isLoading: boolean;
 }
+
+const SearchInputFallback = () => <span>Search</span>;
 
 function NothingFoundMessage({
   isNothingFound,
@@ -52,8 +55,6 @@ function PageContentContainer({
 
   const router = useRouter();
 
-  const { width } = useWindowDimensions();
-
   if (isLoading) {
     content = (
       <div className="w-full h-full flex justify-center items-center">
@@ -67,10 +68,12 @@ function PageContentContainer({
       <OnlyDesktopWarning />
       <div>
         <div className="mb-[10px] flex gap-[10px]">
-          <SearchInput
-            placeholder={"Search for breeds by name"}
-            onSearch={getOnSearch(router)}
-          />
+          <Suspense fallback={<SearchInputFallback />}>
+            <SearchInput
+              placeholder={"Search for breeds by name"}
+              onSearch={getOnSearch(router)}
+            />
+          </Suspense>
           <PageControlButton />
         </div>
         <div className="w-[680px] h-[850px] bg-white rounded-[20px] p-5 flex flex-col gap-5">
@@ -80,7 +83,7 @@ function PageContentContainer({
               content={content}
               isLoading={isLoading}
               isNothingFound={isNothingFound}
-            ></NothingFoundMessage>
+            />
           }
         </div>
       </div>

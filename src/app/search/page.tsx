@@ -6,8 +6,9 @@ import PageContentContainer from "../components/clients/Page-content-container";
 import isLoading from "../helpers/is-loading";
 import ControlSection from "./components/Controll-section";
 import { SelectValue } from "../hooks/use-cat-search-control/helpers/get-breeds-select-values";
-import { useEffect } from "react";
+import { Dispatch, SetStateAction, Suspense, useEffect, useRef } from "react";
 import CatView from "../components/clients/Cat-view";
+import { CatImageData } from "../api/api";
 
 const searchBreedName = (
   breedValues: SelectValue[],
@@ -19,6 +20,8 @@ const searchBreedName = (
           breedData.name.toLowerCase() === searchBreedName.toLowerCase()
       )?.value
     : undefined;
+
+const SearchPageFallback = () => <span>Search page</span>;
 
 function SearchPage() {
   const searchParams = useSearchParams();
@@ -35,16 +38,18 @@ function SearchPage() {
     setAllImages,
   } = useCatSearchControl();
 
+  const previousSetAllImages = useRef(setAllImages);
+  const previousSetCurBreedId = useRef(setCurBreedId);
+
   const controlSectionElement = <ControlSection />;
 
   const findBreed = searchBreedName(breedsSelectValue, targetBreedName);
 
+  useEffect(() => previousSetAllImages.current(null), []);
+
   useEffect(() => {
-    if (!findBreed) {
-      return;
-    }
-    setAllImages([]);
-    setCurBreedId(findBreed);
+    previousSetAllImages.current(null);
+    previousSetCurBreedId.current(findBreed ?? "null");
   }, [findBreed]);
 
   return (

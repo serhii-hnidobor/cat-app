@@ -1,5 +1,5 @@
 "use client";
-import { useState } from "react";
+import { Dispatch, SetStateAction, useState } from "react";
 import SearchIcon from "../icons/Search-icon";
 import { useSearchParams } from "next/navigation";
 import useKeyPress from "@/app/hooks/use-keypress";
@@ -9,12 +9,25 @@ interface Props {
   onSearch: (searchValue: string) => void;
 }
 
+function getOnFocusAndOnBlur(setIsInFocus: Dispatch<SetStateAction<boolean>>) {
+  return {
+    onFocus: () => setIsInFocus(true),
+    onBlur: () => setIsInFocus(false),
+  };
+}
+
 function SearchInput({ placeholder, onSearch }: Props) {
   const searchParams = useSearchParams();
   const defaultSearchValue = searchParams.get("value");
   const [searchValue, setSearchValue] = useState(defaultSearchValue ?? "");
+  const [isInFocus, setIsInFocus] = useState(false);
 
-  useKeyPress({ keyArray: ["Enter"], callback: () => onSearch(searchValue) });
+  const { onBlur, onFocus } = getOnFocusAndOnBlur(setIsInFocus);
+
+  useKeyPress({
+    keyArray: ["Enter"],
+    callback: () => isInFocus && onSearch(searchValue),
+  });
 
   return (
     <div
@@ -27,6 +40,8 @@ function SearchInput({ placeholder, onSearch }: Props) {
         value={searchValue}
         className="py-[10px] h-full pl-5 pr-[60px] w-full bg-white rounded-[20px] focus:outline-[2px] focus:outline-solid focus:outline-[#FBE0DC]"
         placeholder={placeholder}
+        onFocus={onFocus}
+        onBlur={onBlur}
       />
       <button
         onClick={() => onSearch(searchValue)}

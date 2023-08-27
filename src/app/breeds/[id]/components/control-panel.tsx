@@ -11,7 +11,7 @@ const ControlPanel = ({ breedId }: Props) => {
   return (
     <div className="flex gap-[10px] mb-5">
       <BackButton onClick={() => router.back()} />
-      <div className="w-[143px] h-[40px] bg-[#FBE0DC] rounded-[10px] flex justify-center items-center">
+      <div className="px-[30px] py-[5px] bg-[#FBE0DC] rounded-[10px] flex justify-center items-center">
         <span className="uppercase text-xl text-[#FF868E] not-italic font-medium leading-[30px] tracking-[2px]">
           breeds
         </span>
