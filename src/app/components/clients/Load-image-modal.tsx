@@ -83,7 +83,7 @@ const LoadImageModal = ({ isOpen, onClose }: Props) => {
                 >
                   upload guidelines
                 </a>
-                &nbsp; or face deletion.
+                &nbsp;or face deletion.
               </h3>
             </div>
             <Dropzone

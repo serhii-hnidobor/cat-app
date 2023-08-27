@@ -45,14 +45,14 @@ function Dropzone({
       onImageChange();
       setFile(acceptedFiles[0]);
     },
-    [onImageChange]
+    [onImageChange],
   );
 
   const { getRootProps, getInputProps, isDragActive } = useDropzone({ onDrop });
 
   const rootClassName = clsx(
-    "flex justify-center px-[41px] py-5 items-center w-full h-[320px] bg-white border-[2px] border-dashed border-[#FBE0DC] rounded-[20px] relative mb-5",
-    { "!bg-[#FBE0DC] !border-[#FF868E]": isImageAcceptError }
+    "flex justify-center cursor-pointer px-[41px] py-5 items-center w-full h-[320px] bg-white border-[2px] border-dashed border-[#FBE0DC] rounded-[20px] relative mb-5",
+    { "!bg-[#FBE0DC] !border-[#FF868E]": isImageAcceptError },
   );
 
   return (
