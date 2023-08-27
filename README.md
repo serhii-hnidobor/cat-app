@@ -43,3 +43,9 @@ Welcome to the Cat App! Meow-some times await as you explore, search, and vote f
 - **Next.js**: A React framework for building server-rendered and statically-exported applications.
 
 - **React**: A JavaScript library for building user interfaces.
+
+## 📊 Page Insight
+
+Here's a glimpse of how Cat App performs in terms of loading speed and performance:
+
+![Page Insight](https://i.ibb.co/T12Xwzd/2023-08-28-01-46-22.png)
